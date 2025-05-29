@@ -34,14 +34,22 @@ cp .env.example .env
 3. Enable the Google+ API:
    - Navigate to "APIs & Services" → "Library"
    - Search for "Google+ API" and enable it
-4. Create OAuth 2.0 credentials:
+4. Configure OAuth consent screen:
+   - Go to "APIs & Services" → "OAuth consent screen"
+   - Choose "External" user type
+   - Fill in required fields (App name, User support email, Developer contact)
+5. Create OAuth 2.0 credentials:
    - Go to "APIs & Services" → "Credentials"
    - Click "Create Credentials" → "OAuth 2.0 Client IDs"
    - Choose "Web application"
-   - Add authorized redirect URIs:
+   - Set application name (e.g., "T3 Payload CMS App")
+   - **Add authorized redirect URIs**:
      - For development: `http://localhost:3000/api/auth/callback/google`
      - For production: `https://yourdomain.com/api/auth/callback/google`
-5. Copy the Client ID and Client Secret
+6. **Copy your credentials**:
+   - **Client ID**: Copy this value for `GOOGLE_CLIENT_ID`
+   - **Client Secret**: Copy this value for `GOOGLE_CLIENT_SECRET`
+   - Save these credentials securely
 
 ### 4. Setup MongoDB
 
@@ -74,7 +82,7 @@ DATABASE_URI="mongodb://localhost:27017/your-database-name"
 NEXTAUTH_SECRET="your-nextauth-secret"
 NEXTAUTH_URL="http://localhost:3000"
 
-# Google OAuth
+# Google OAuth (from Google Cloud Console - step 3.6)
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
 
@@ -87,24 +95,7 @@ Generate secrets using:
 openssl rand -hex 32
 ```
 
-### 6. Enable Google Provider
-
-Uncomment the Google provider in `src/auth.config.ts`:
-
-```typescript
-import google from "next-auth/providers/google";
-
-export const authConfig: NextAuthConfig = {
-  providers: [
-    google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-  ],
-};
-```
-
-### 7. Start Development Server
+### 6. Start Development Server
 
 ```bash
 pnpm dev

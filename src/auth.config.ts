@@ -1,10 +1,12 @@
-// auth.config.ts
 import type { NextAuthConfig } from "next-auth";
-// import github from "next-auth/providers/github";
-// import google from "next-auth/providers/google";
+import google from "next-auth/providers/google";
+import { env } from "./env.mjs";
 
 export const authConfig: NextAuthConfig = {
-  providers: [
-    // github, // <-- Add your provider here
-  ],
+	providers: [
+		google({
+			clientId: env.GOOGLE_CLIENT_ID,
+			clientSecret: env.GOOGLE_CLIENT_SECRET,
+		}),
+	],
 };
