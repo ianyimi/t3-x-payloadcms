@@ -1,9 +1,20 @@
-// middleware.ts
-import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { NextResponse, type NextRequest } from "next/server";
+import { auth } from "~/auth"
+import { headers } from "next/headers";
 
-export const { auth: middleware } = NextAuth(authConfig);
+export async function middleware(request: NextRequest) {
+	const session = await auth.api.getSession({
+		headers: await headers()
+	})
+
+	if (!session) {
+		return NextResponse.redirect(new URL("/", request.url))
+	}
+
+	return NextResponse.next()
+}
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|admin/login).*)"],
+	runtime: "nodejs",
+	matcher: ["/((?!api|_next/static|_next/image|favicon.ico|admin|$).*)"],
 };

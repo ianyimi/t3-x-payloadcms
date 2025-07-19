@@ -1,11 +1,11 @@
-// auth.ts
-import payloadConfig from "@payload-config";
-import NextAuth from "next-auth";
-import { withPayload } from "payload-authjs";
-import { authConfig } from "./auth.config"; // ⚠ Import the config from a separate file
+import { betterAuth } from "better-auth"
+import { mongodbAdapter } from "better-auth/adapters/mongodb"
+import { MongoClient } from "mongodb"
+import { env } from "./env.mjs"
 
-export const { handlers, signIn, signOut, auth } = NextAuth(
-  withPayload(authConfig, {
-    payloadConfig,
-  }),
-);
+const client = new MongoClient(env.DATABASE_URI)
+const db = client.db()
+
+export const auth = betterAuth({
+	database: mongodbAdapter(db)
+})
