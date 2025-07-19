@@ -3,7 +3,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 import { env } from "~/env.mjs";
-import { pluginOptions } from "~/auth.config";
+import { pluginOptions } from "~/auth/config";
 import { payloadBetterAuth } from "@payload-auth/better-auth-plugin"
 
 export default buildConfig({
@@ -12,6 +12,10 @@ export default buildConfig({
 
 	// Define and configure your collections in this array
 	collections: [],
+
+	cors: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
+	csrf: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
+	serverURL: `${env.NEXT_PUBLIC_BETTER_AUTH_URL}`,
 
 	// Your Payload secret - should be a complex and secure string, unguessable
 	secret: env.PAYLOAD_SECRET || "",

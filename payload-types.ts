@@ -68,6 +68,10 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    accounts: Account;
+    sessions: Session;
+    verifications: Verification;
+    apiKeys: ApiKey;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -75,6 +79,10 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    accounts: AccountsSelect<false> | AccountsSelect<true>;
+    sessions: SessionsSelect<false> | SessionsSelect<true>;
+    verifications: VerificationsSelect<false> | VerificationsSelect<true>;
+    apiKeys: ApiKeysSelect<false> | ApiKeysSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -117,17 +125,237 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  email: string;
-  emailVerified?: string | null;
+  /**
+   * Users chosen display name
+   */
   name?: string | null;
+  /**
+   * The email of the user
+   */
+  email: string;
+  /**
+   * Whether the email of the user has been verified
+   */
+  emailVerified: boolean;
+  /**
+   * The image of the user
+   */
   image?: string | null;
-  accounts?:
+  /**
+   * The role of the user
+   */
+  role: 'admin' | 'user';
+  /**
+   * Whether the user is banned from the platform
+   */
+  banned?: boolean | null;
+  /**
+   * The reason for the ban
+   */
+  banReason?: string | null;
+  /**
+   * The date and time when the ban will expire
+   */
+  banExpires?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Accounts are used to store user accounts for authentication providers
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts".
+ */
+export interface Account {
+  id: string;
+  /**
+   * The user that the account belongs to
+   */
+  user: string | User;
+  /**
+   * The id of the account as provided by the SSO or equal to userId for credential accounts
+   */
+  accountId: string;
+  /**
+   * The id of the provider as provided by the SSO
+   */
+  providerId: string;
+  /**
+   * The access token of the account. Returned by the provider
+   */
+  accessToken?: string | null;
+  /**
+   * The refresh token of the account. Returned by the provider
+   */
+  refreshToken?: string | null;
+  /**
+   * The date and time when the access token will expire
+   */
+  accessTokenExpiresAt?: string | null;
+  /**
+   * The date and time when the refresh token will expire
+   */
+  refreshTokenExpiresAt?: string | null;
+  /**
+   * The scope of the account. Returned by the provider
+   */
+  scope?: string | null;
+  /**
+   * The id token for the account. Returned by the provider
+   */
+  idToken?: string | null;
+  /**
+   * The hashed password of the account. Mainly used for email and password authentication
+   */
+  password?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Sessions are active sessions for users. They are used to authenticate users with a session token
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: string;
+  /**
+   * The user that the session belongs to
+   */
+  user: string | User;
+  /**
+   * The unique session token
+   */
+  token: string;
+  /**
+   * The date and time when the session will expire
+   */
+  expiresAt: string;
+  /**
+   * The IP address of the device
+   */
+  ipAddress?: string | null;
+  /**
+   * The user agent information of the device
+   */
+  userAgent?: string | null;
+  /**
+   * The admin who is impersonating this session
+   */
+  impersonatedBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Verifications are used to verify authentication requests
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "verifications".
+ */
+export interface Verification {
+  id: string;
+  /**
+   * The identifier of the verification request
+   */
+  identifier: string;
+  /**
+   * The value to be verified
+   */
+  value: string;
+  /**
+   * The date and time when the verification request will expire
+   */
+  expiresAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * API keys are used to authenticate requests to the API.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apiKeys".
+ */
+export interface ApiKey {
+  id: string;
+  /**
+   * The name of the API key.
+   */
+  name?: string | null;
+  /**
+   * The starting characters of the API key. Useful for showing the first few characters of the API key in the UI for the users to easily identify.
+   */
+  start?: string | null;
+  /**
+   * The API Key prefix. Stored as plain text.
+   */
+  prefix?: string | null;
+  /**
+   * The hashed API key itself.
+   */
+  key: string;
+  /**
+   * The user associated with the API key.
+   */
+  user: string | User;
+  /**
+   * The interval to refill the key in milliseconds.
+   */
+  refillInterval?: number | null;
+  /**
+   * The amount to refill the remaining count of the key.
+   */
+  refillAmount?: number | null;
+  /**
+   * The date and time when the key was last refilled.
+   */
+  lastRefillAt?: string | null;
+  /**
+   * Whether the API key is enabled.
+   */
+  enabled?: boolean | null;
+  /**
+   * Whether the API key has rate limiting enabled.
+   */
+  rateLimitEnabled?: boolean | null;
+  /**
+   * The time window in milliseconds for the rate limit.
+   */
+  rateLimitTimeWindow?: number | null;
+  /**
+   * The maximum number of requests allowed within the rate limit time window.
+   */
+  rateLimitMax?: number | null;
+  /**
+   * The number of requests made within the rate limit time window.
+   */
+  requstCount: number;
+  /**
+   * The number of requests remaining.
+   */
+  remaining?: number | null;
+  /**
+   * The date and time of the last request made to the key.
+   */
+  lastRequest?: string | null;
+  /**
+   * The date and time of when the API key will expire.
+   */
+  expiresAt?: string | null;
+  /**
+   * The permissions for the API key.
+   */
+  permissions?: string | null;
+  /**
+   * Any additional metadata you want to store with the key.
+   */
+  metadata?:
     | {
-        id?: string | null;
-        provider: string;
-        providerAccountId: string;
-        type: string;
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   updatedAt: string;
   createdAt: string;
@@ -138,10 +366,27 @@ export interface User {
  */
 export interface PayloadLockedDocument {
   id: string;
-  document?: {
-    relationTo: 'users';
-    value: string | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'accounts';
+        value: string | Account;
+      } | null)
+    | ({
+        relationTo: 'sessions';
+        value: string | Session;
+      } | null)
+    | ({
+        relationTo: 'verifications';
+        value: string | Verification;
+      } | null)
+    | ({
+        relationTo: 'apiKeys';
+        value: string | ApiKey;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -189,19 +434,83 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  id?: T;
+  name?: T;
   email?: T;
   emailVerified?: T;
-  name?: T;
   image?: T;
-  accounts?:
-    | T
-    | {
-        id?: T;
-        provider?: T;
-        providerAccountId?: T;
-        type?: T;
-      };
+  role?: T;
+  banned?: T;
+  banReason?: T;
+  banExpires?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts_select".
+ */
+export interface AccountsSelect<T extends boolean = true> {
+  user?: T;
+  accountId?: T;
+  providerId?: T;
+  accessToken?: T;
+  refreshToken?: T;
+  accessTokenExpiresAt?: T;
+  refreshTokenExpiresAt?: T;
+  scope?: T;
+  idToken?: T;
+  password?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions_select".
+ */
+export interface SessionsSelect<T extends boolean = true> {
+  user?: T;
+  token?: T;
+  expiresAt?: T;
+  ipAddress?: T;
+  userAgent?: T;
+  impersonatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "verifications_select".
+ */
+export interface VerificationsSelect<T extends boolean = true> {
+  identifier?: T;
+  value?: T;
+  expiresAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apiKeys_select".
+ */
+export interface ApiKeysSelect<T extends boolean = true> {
+  name?: T;
+  start?: T;
+  prefix?: T;
+  key?: T;
+  user?: T;
+  refillInterval?: T;
+  refillAmount?: T;
+  lastRefillAt?: T;
+  enabled?: T;
+  rateLimitEnabled?: T;
+  rateLimitTimeWindow?: T;
+  rateLimitMax?: T;
+  requstCount?: T;
+  remaining?: T;
+  lastRequest?: T;
+  expiresAt?: T;
+  permissions?: T;
+  metadata?: T;
   updatedAt?: T;
   createdAt?: T;
 }
