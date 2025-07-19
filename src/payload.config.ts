@@ -5,13 +5,14 @@ import { buildConfig } from "payload";
 import { env } from "~/env.mjs";
 import { pluginOptions } from "~/auth/config";
 import { payloadBetterAuth } from "@payload-auth/better-auth-plugin"
+import { collections } from "./payload/collections";
 
 export default buildConfig({
 	// If you'd like to use Rich Text, pass your editor here
 	editor: lexicalEditor(),
 
 	// Define and configure your collections in this array
-	collections: [],
+	collections: collections,
 
 	cors: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
 	csrf: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
