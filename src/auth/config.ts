@@ -1,6 +1,10 @@
-import { env } from "./env.mjs";
+import { env } from "~/env.mjs";
 import type { PayloadBetterAuthOptions, PayloadBetterAuthPluginOptions } from "@payload-auth/better-auth-plugin";
-import { COLLECTION_SLUG_ACCOUNTS, COLLECTION_SLUG_SESSIONS, COLLECTION_SLUG_USERS, COLLECTION_SLUG_VERIFICATIONS } from "./payload/constants";
+import { COLLECTION_SLUG_ACCOUNTS, COLLECTION_SLUG_SESSIONS, COLLECTION_SLUG_USERS, COLLECTION_SLUG_VERIFICATIONS } from "../payload/constants";
+import {
+	admin,
+	apiKey
+} from "better-auth/plugins"
 
 export const USER_ROLES = {
 	admin: 'admin',
@@ -8,8 +12,11 @@ export const USER_ROLES = {
 } as const
 export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES]
 
-// export const betterAuthPlugins = createBetterAuthPlugins()
-// export type BetterAuthPlugins = ReturnType<typeof createBetterAuthPlugins>
+export const betterAuthPlugins = [
+	admin(),
+	apiKey()
+]
+export type BetterAuthPlugins = typeof betterAuthPlugins
 
 export const betterAuthConfig: PayloadBetterAuthOptions = {
 	emailAndPassword: {
@@ -21,6 +28,8 @@ export const betterAuthConfig: PayloadBetterAuthOptions = {
 			clientSecret: env.GOOGLE_CLIENT_SECRET,
 		},
 	},
+	// @ts-expect-error mismatch auth types, may be due to user collection in mongodb
+	plugins: betterAuthPlugins
 };
 
 export const pluginOptions: PayloadBetterAuthPluginOptions = {
