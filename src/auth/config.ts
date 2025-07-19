@@ -13,7 +13,10 @@ export const USER_ROLES = {
 export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES]
 
 export const betterAuthPlugins = [
-	admin(),
+	admin({
+		defaultRole: 'user',
+		adminRoles: ['admin']
+	}),
 	apiKey()
 ]
 export type BetterAuthPlugins = typeof betterAuthPlugins
