@@ -1,30 +1,56 @@
-import type { Account, DeviceSession } from '~/auth/client'
-import { getPayload } from '~/payload/auth'
+import type { Account, DeviceSession, Session } from '~/auth/types'
+import { getPayloadAuth } from '~/payload/auth'
 import { headers as requestHeaders } from 'next/headers'
 
 export const getSession = async () => {
-	const payload = await getPayload()
+	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
 	const session = await payload.betterAuth.api.getSession({ headers })
 	return session
 }
 
+export const validateSession = async (session: Session) => {
+	const payload = await getPayloadAuth()
+	const headers = await requestHeaders()
+	if (!session?.session || !session.user) {
+		return {
+			valid: false,
+			error: 'invalid session or user'
+		}
+	}
+	if (session.session.expiresAt.getTime() >= Date.now()) {
+		return {
+			valid: false,
+			error: 'session expired'
+		}
+	}
+	if (session.user.banned) {
+		return {
+			valid: false,
+			error: 'banned user'
+		}
+	}
+	return {
+		valid: true,
+	}
+}
+
 export const getUserAccounts = async (): Promise<Account[]> => {
-	const payload = await getPayload()
+	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
 	const accounts = await payload.betterAuth.api.listUserAccounts({ headers })
 	return accounts
 }
 
 export const getDeviceSessions = async (): Promise<DeviceSession[]> => {
-	const payload = await getPayload()
+	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
 	const sessions = await payload.betterAuth.api.listSessions({ headers })
 	return sessions
 }
 
 export const currentUser = async () => {
-	const payload = await getPayload()
+	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
 	const { user } = await payload.auth({ headers })
 	return user
