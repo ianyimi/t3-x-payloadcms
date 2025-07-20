@@ -6,16 +6,30 @@ import { env } from "~/env.mjs";
 import { pluginOptions } from "~/auth/config";
 import { payloadBetterAuth } from "@payload-auth/better-auth-plugin"
 import { collections } from "./payload/collections";
+import { COLLECTION_SLUG_USERS } from "./payload/constants";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
+
+const allowedOrigins = [env.NEXT_PUBLIC_BETTER_AUTH_URL].filter(Boolean)
 
 export default buildConfig({
 	// If you'd like to use Rich Text, pass your editor here
 	editor: lexicalEditor(),
+	admin: {
+		user: COLLECTION_SLUG_USERS,
+		importMap: {
+			baseDir: path.resolve(dirname)
+		}
+	},
 
 	// Define and configure your collections in this array
 	collections: collections,
 
-	cors: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
-	csrf: [`${env.NEXT_PUBLIC_BETTER_AUTH_URL}`],
+	cors: allowedOrigins,
+	csrf: allowedOrigins,
 	serverURL: `${env.NEXT_PUBLIC_BETTER_AUTH_URL}`,
 
 	// Your Payload secret - should be a complex and secure string, unguessable
@@ -31,9 +45,11 @@ export default buildConfig({
 	// This is optional - if you don't need to do these things,
 	// you don't need it!
 	sharp,
+	typescript: {
+		outputFile: path.resolve(dirname, 'payload-types.ts')
+	},
 
 	plugins: [
-		// @ts-expect-error mismatch plugin types for some reason I am unsure about right now
 		payloadBetterAuth(pluginOptions),
 	],
 });
