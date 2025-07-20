@@ -19,11 +19,11 @@
 	"dependencies": {
 		"@daveyplate/better-auth-ui": "^2.0.14",
 		"@payload-auth/better-auth-plugin": "^1.1.8",
-		"@payloadcms/db-mongodb": "3.28.1",
-		"@payloadcms/graphql": "3.28.1",
-		"@payloadcms/next": "3.28.1",
-		"@payloadcms/richtext-lexical": "3.28.1",
-		"@payloadcms/ui": "3.28.1",
+		"@payloadcms/db-mongodb": "^3.48.0",
+		"@payloadcms/graphql": "^3.48.0",
+		"@payloadcms/next": "^3.48.0",
+		"@payloadcms/richtext-lexical": "^3.48.0",
+		"@payloadcms/ui": "^3.48.0",
 		"@radix-ui/react-slot": "^1.2.3",
 		"@t3-oss/env-nextjs": "^0.12.0",
 		"@tanstack/react-query": "^5.69.0",
@@ -38,7 +38,7 @@
 		"mongodb": "6.17.0",
 		"next": "15.4.2-canary.9",
 		"next-auth": "5.0.0-beta.26",
-		"payload": "3.28.1",
+		"payload": "^3.48.0",
 		"payload-authjs": "^0.8.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
@@ -71,7 +71,9 @@
 	"packageManager": "pnpm@10.11.0",
 	"pnpm": {
 		"overrides": {
-			"mongodb": "6.17.0"
+			"mongodb": "6.17.0",
+			"payload": "^3.48.0",
+			"@payloadcms/ui": "^3.48.0"
 		}
 	}
 }
