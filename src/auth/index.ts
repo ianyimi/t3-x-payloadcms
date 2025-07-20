@@ -9,6 +9,8 @@ import {
 	COLLECTION_SLUG_USERS,
 	COLLECTION_SLUG_VERIFICATIONS
 } from "~/payload/constants"
+import { customSession } from "better-auth/plugins"
+import { getPayloadAuth } from "~/payload/auth"
 
 const client = new MongoClient(env.DATABASE_URI)
 const db = client.db()
@@ -70,5 +72,23 @@ export const auth = betterAuth({
 			clientSecret: env.GOOGLE_CLIENT_SECRET,
 		},
 	},
-	plugins: betterAuthPlugins
+	plugins: [
+		...(betterAuthPlugins ?? []),
+		customSession(async ({ user, session }) => {
+			const payload = await getPayloadAuth()
+			console.log('payload: ', payload)
+			const existingUser = await payload.findByID({
+				collection:
+					COLLECTION_SLUG_USERS, id:
+					user.id
+			})
+			return {
+				user: {
+					...user,
+					role: existingUser.role
+				},
+				session
+			}
+		})
+	]
 })

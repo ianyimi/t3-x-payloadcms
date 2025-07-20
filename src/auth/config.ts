@@ -3,7 +3,7 @@ import type { PayloadBetterAuthOptions, PayloadBetterAuthPluginOptions } from "@
 import { COLLECTION_SLUG_ACCOUNTS, COLLECTION_SLUG_SESSIONS, COLLECTION_SLUG_USERS, COLLECTION_SLUG_VERIFICATIONS } from "../payload/constants";
 import {
 	admin,
-	apiKey
+	apiKey,
 } from "better-auth/plugins"
 import { nextCookies } from "better-auth/next-js";
 
@@ -45,6 +45,10 @@ export const pluginOptions: PayloadBetterAuthPluginOptions = {
 		slug: COLLECTION_SLUG_USERS,
 		hidden: false,
 		adminRoles: [USER_ROLES.admin],
+		// @ts-expect-error additional collection config
+		auth: {
+			useSession: false
+		}
 	},
 	accounts: {
 		slug: COLLECTION_SLUG_ACCOUNTS
