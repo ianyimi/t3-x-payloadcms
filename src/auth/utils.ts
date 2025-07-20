@@ -1,6 +1,6 @@
 import type { Account, DeviceSession, Session } from '~/auth/types'
-import { getPayloadAuth } from '~/payload/auth'
 import { headers as requestHeaders } from 'next/headers'
+import { getPayloadAuth } from '~/payload/auth'
 
 export const getSession = async () => {
 	const payload = await getPayloadAuth()
@@ -10,26 +10,27 @@ export const getSession = async () => {
 }
 
 export const validateSession = async (session: Session) => {
-	const payload = await getPayloadAuth()
-	const headers = await requestHeaders()
 	if (!session?.session || !session.user) {
 		return {
 			valid: false,
 			error: 'invalid session or user'
 		}
 	}
-	if (session.session.expiresAt.getTime() >= Date.now()) {
+	if (session.session.expiresAt.getTime() <= Date.now()) {
 		return {
 			valid: false,
 			error: 'session expired'
 		}
 	}
-	if (session.user.banned) {
+
+	// Check if user is banned - with proper null checking
+	if (session.user && 'banned' in session.user && session.user.banned) {
 		return {
 			valid: false,
 			error: 'banned user'
 		}
 	}
+
 	return {
 		valid: true,
 	}
@@ -52,8 +53,8 @@ export const getDeviceSessions = async (): Promise<DeviceSession[]> => {
 export const currentUser = async () => {
 	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
-	const { user } = await payload.auth({ headers })
-	return user
+	const session = await payload.betterAuth.api.getSession({ headers })
+	return session?.user || null
 }
 
 export const getContextProps = () => {

@@ -3,7 +3,12 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { MongoClient } from "mongodb"
 import { env } from "~/env.mjs"
 import { betterAuthPlugins, USER_ROLES } from "./config"
-import { COLLECTION_SLUG_ACCOUNTS, COLLECTION_SLUG_SESSIONS, COLLECTION_SLUG_USERS, COLLECTION_SLUG_VERIFICATIONS } from "~/payload/constants"
+import {
+	COLLECTION_SLUG_ACCOUNTS,
+	COLLECTION_SLUG_SESSIONS,
+	COLLECTION_SLUG_USERS,
+	COLLECTION_SLUG_VERIFICATIONS
+} from "~/payload/constants"
 
 const client = new MongoClient(env.DATABASE_URI)
 const db = client.db()
