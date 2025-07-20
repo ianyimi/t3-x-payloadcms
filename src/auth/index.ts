@@ -76,7 +76,6 @@ export const auth = betterAuth({
 		...(betterAuthPlugins ?? []),
 		customSession(async ({ user, session }) => {
 			const payload = await getPayloadAuth()
-			console.log('payload: ', payload)
 			const existingUser = await payload.findByID({
 				collection:
 					COLLECTION_SLUG_USERS, id:
