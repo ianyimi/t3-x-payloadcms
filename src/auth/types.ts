@@ -1,6 +1,8 @@
-import { auth } from '~/auth'
+import { type getPayloadAuth } from '~/payload/auth'
 
-export type Session = typeof auth['$Infer']['Session']
-export type User = typeof auth['$Infer']['User']
-export type Account = Awaited<ReturnType<typeof auth['api']['listUserAccounts']>>[number]
-export type DeviceSession = Awaited<ReturnType<typeof auth['api']['listSessions']>>[number]
+type PayloadWithBetterAuth = Awaited<ReturnType<typeof getPayloadAuth>>
+
+export type Session = PayloadWithBetterAuth['betterAuth']['$Infer']['Session']
+export type User = PayloadWithBetterAuth['betterAuth']['$Infer']['User']
+export type Account = Awaited<ReturnType<PayloadWithBetterAuth['betterAuth']['api']['listUserAccounts']>>[number]
+export type DeviceSession = Awaited<ReturnType<PayloadWithBetterAuth['betterAuth']['api']['listSessions']>>[number]

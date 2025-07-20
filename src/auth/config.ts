@@ -5,6 +5,7 @@ import {
 	admin,
 	apiKey
 } from "better-auth/plugins"
+import { nextCookies } from "better-auth/next-js";
 
 export const USER_ROLES = {
 	admin: 'admin',
@@ -14,10 +15,11 @@ export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES]
 
 export const betterAuthPlugins = [
 	admin({
-		defaultRole: 'user',
-		adminRoles: ['admin']
+		defaultRole: USER_ROLES.user,
+		adminRoles: [USER_ROLES.admin]
 	}),
-	apiKey()
+	apiKey(),
+	nextCookies(),
 ]
 export type BetterAuthPlugins = typeof betterAuthPlugins
 
@@ -38,7 +40,7 @@ export const betterAuthConfig: PayloadBetterAuthOptions = {
 
 export const pluginOptions: PayloadBetterAuthPluginOptions = {
 	disabled: false,
-	hidePluginCollections: true,
+	hidePluginCollections: false,
 	users: {
 		slug: COLLECTION_SLUG_USERS,
 		hidden: false,

@@ -7,6 +7,7 @@ import {
 
 export const authClient = createAuthClient({
 	baseURL: env.NEXT_PUBLIC_BETTER_AUTH_URL,
+	basePath: "/api/auth", 
 	plugins: [
 		adminClient(),
 		apiKeyClient()
