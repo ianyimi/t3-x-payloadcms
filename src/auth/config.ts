@@ -24,6 +24,9 @@ export const betterAuthPlugins = [
 export type BetterAuthPlugins = typeof betterAuthPlugins
 
 export const betterAuthConfig: PayloadBetterAuthOptions = {
+	appName: 'Markitect',
+	baseURL: env.NEXT_PUBLIC_BETTER_AUTH_URL,
+	trustedOrigins: [env.NEXT_PUBLIC_BETTER_AUTH_URL],
 	emailAndPassword: {
 		enabled: true
 	},
@@ -41,20 +44,29 @@ export const betterAuthConfig: PayloadBetterAuthOptions = {
 export const pluginOptions: PayloadBetterAuthPluginOptions = {
 	disabled: false,
 	hidePluginCollections: false,
+	disableDefaultPayloadAuth: true,
 	users: {
 		slug: COLLECTION_SLUG_USERS,
 		hidden: false,
+		roles: Object.values(USER_ROLES),
 		adminRoles: [USER_ROLES.admin],
 		// @ts-expect-error additional collection config
 		auth: {
 			useSession: false
+		},
+		additionalFields: {
+			role: {
+				type: 'string',
+				defaultValue: USER_ROLES.user,
+				input: false
+			}
 		}
 	},
 	accounts: {
 		slug: COLLECTION_SLUG_ACCOUNTS
 	},
 	sessions: {
-		slug: COLLECTION_SLUG_SESSIONS
+		slug: COLLECTION_SLUG_SESSIONS,
 	},
 	verifications: {
 		slug: COLLECTION_SLUG_VERIFICATIONS
