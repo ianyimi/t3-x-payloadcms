@@ -7,6 +7,5 @@ export const Users: CollectionConfig = {
 		hidden: ({ user }) => false,
 		useAsTitle: 'email',
 	},
-	auth: true,
 	fields: []
 }

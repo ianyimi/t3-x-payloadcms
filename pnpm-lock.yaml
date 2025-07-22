@@ -15,7 +15,7 @@ importers:
     dependencies:
       '@daveyplate/better-auth-ui':
         specifier: ^2.0.14
-        version: 2.0.14(79581a13a4a0984b070ec4ba20fb73b4)
+        version: 2.0.15(20fa8e4d9e0b13cf809b03b7b61e36fb)
       '@payload-auth/better-auth-plugin':
         specifier: ^1.1.8
         version: 1.1.8(@types/react-dom@19.1.2(@types/react@19.1.2))(@types/react@19.1.2)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.4.2-canary.9(babel-plugin-react-compiler@19.1.0-rc.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
@@ -53,8 +53,8 @@ importers:
         specifier: ^11.0.0
         version: 11.1.0(typescript@5.8.3)
       better-auth:
-        specifier: ^1.2.12
-        version: 1.2.12
+        specifier: ^1.3.2
+        version: 1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -236,8 +236,8 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@daveyplate/better-auth-ui@2.0.14':
-    resolution: {integrity: sha512-8ma5Pc+ryaIJWBRus7sfsiucpUqGFCBwuM2MOmT9jhATLFA7AkneVsaEhpIb5URDhXinv/24eT1stj5U/QPz6w==}
+  '@daveyplate/better-auth-ui@2.0.15':
+    resolution: {integrity: sha512-PL6gzt8QWneMVyPc4t6wwOrh1T364ooCxLQUvT/oGTwy5fJQ9vusxQrToU/D92epJmZBf/feLBsaFR/6JmwqSg==}
     peerDependencies:
       '@daveyplate/better-auth-tanstack': ^1.3.6
       '@hookform/resolvers': '>=5.0.0'
@@ -2418,11 +2418,19 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  better-auth@1.2.12:
-    resolution: {integrity: sha512-YicCyjQ+lxb7YnnaCewrVOjj3nPVa0xcfrOJK7k5MLMX9Mt9UnJ8GYaVQNHOHLyVxl92qc3C758X1ihqAUzm4w==}
-
   better-auth@1.2.4:
     resolution: {integrity: sha512-/ZK2jbUjm8JwdeCLFrUWUBmexPyI9PkaLVXWLWtN60sMDHTY8B5G72wcHglo1QMFBaw4G0qFkP5ayl9k6XfDaA==}
+
+  better-auth@1.3.2:
+    resolution: {integrity: sha512-510kOtFBTdp4z51hWtTEqk9yqSinXzyg7PkDFnXYMq1K0KvdXRY1A9t9J998i0CSf/tJA0wNoN3S8exkOgBvTw==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   better-call@1.0.12:
     resolution: {integrity: sha512-ssq5OfB9Ungv2M1WVrRnMBomB0qz1VKuhkY2WxjHaLtlsHoSe9EPolj1xf7xf8LY9o3vfk3Rx6rCWI4oVHeBRg==}
@@ -3293,9 +3301,6 @@ packages:
 
   jose@6.0.10:
     resolution: {integrity: sha512-skIAxZqcMkOrSwjJvplIPYrlXGpxTPnro2/QWTDCxAdWQrSTV5/KqspMWmi5WAx5+ULswASJiZ0a+1B/Lxt9cw==}
-
-  jose@6.0.12:
-    resolution: {integrity: sha512-T8xypXs8CpmiIi78k0E+Lk7T2zlK4zDyg+o1CZ4AkOHgDg98ogdP2BeZ61lTFKFyoEwJ9RgAgN+SdM3iPgNonQ==}
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -4781,18 +4786,18 @@ snapshots:
 
   '@date-fns/tz@1.2.0': {}
 
-  '@daveyplate/better-auth-tanstack@1.3.6(@tanstack/query-core@5.74.4)(@tanstack/react-query@5.74.4(react@19.1.0))(better-auth@1.2.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@daveyplate/better-auth-tanstack@1.3.6(@tanstack/query-core@5.74.4)(@tanstack/react-query@5.74.4(react@19.1.0))(better-auth@1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@tanstack/query-core': 5.74.4
       '@tanstack/react-query': 5.74.4(react@19.1.0)
-      better-auth: 1.2.12
+      better-auth: 1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@daveyplate/better-auth-ui@2.0.14(79581a13a4a0984b070ec4ba20fb73b4)':
+  '@daveyplate/better-auth-ui@2.0.15(20fa8e4d9e0b13cf809b03b7b61e36fb)':
     dependencies:
       '@better-fetch/fetch': 1.1.18
-      '@daveyplate/better-auth-tanstack': 1.3.6(@tanstack/query-core@5.74.4)(@tanstack/react-query@5.74.4(react@19.1.0))(better-auth@1.2.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@daveyplate/better-auth-tanstack': 1.3.6(@tanstack/query-core@5.74.4)(@tanstack/react-query@5.74.4(react@19.1.0))(better-auth@1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@hcaptcha/react-hcaptcha': 1.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@hookform/resolvers': 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       '@instantdb/react': 0.20.9(react@19.1.0)
@@ -4815,7 +4820,7 @@ snapshots:
       '@triplit/client': 1.0.47(typescript@5.8.3)
       '@triplit/react': 1.0.47(react@19.1.0)(typescript@5.8.3)
       '@wojtekmaj/react-recaptcha-v3': 0.1.4(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      better-auth: 1.2.12
+      better-auth: 1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       input-otp: 1.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -6925,21 +6930,6 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  better-auth@1.2.12:
-    dependencies:
-      '@better-auth/utils': 0.2.5
-      '@better-fetch/fetch': 1.1.18
-      '@noble/ciphers': 0.6.0
-      '@noble/hashes': 1.8.0
-      '@simplewebauthn/browser': 13.1.2
-      '@simplewebauthn/server': 13.1.2
-      better-call: 1.0.12
-      defu: 6.1.4
-      jose: 6.0.12
-      kysely: 0.28.3
-      nanostores: 0.11.4
-      zod: 3.24.3
-
   better-auth@1.2.4(typescript@5.8.3):
     dependencies:
       '@better-auth/utils': 0.2.3
@@ -6957,6 +6947,24 @@ snapshots:
       zod: 3.24.3
     transitivePeerDependencies:
       - typescript
+
+  better-auth@1.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@better-auth/utils': 0.2.5
+      '@better-fetch/fetch': 1.1.18
+      '@noble/ciphers': 0.6.0
+      '@noble/hashes': 1.8.0
+      '@simplewebauthn/browser': 13.1.2
+      '@simplewebauthn/server': 13.1.2
+      better-call: 1.0.12
+      defu: 6.1.4
+      jose: 5.9.6
+      kysely: 0.28.3
+      nanostores: 0.11.4
+      zod: 4.0.5
+    optionalDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   better-call@1.0.12:
     dependencies:
@@ -8004,8 +8012,6 @@ snapshots:
   jose@5.9.6: {}
 
   jose@6.0.10: {}
-
-  jose@6.0.12: {}
 
   joycon@3.1.1: {}
 
