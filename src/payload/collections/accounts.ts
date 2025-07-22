@@ -51,17 +51,5 @@ export const Accounts: CollectionConfig = {
 			name: "password",
 			type: "text",
 		},
-		{
-			name: "createdAt",
-			type: "text",
-			required: true,
-			defaultValue: new Date()
-		},
-		{
-			name: "updatedAt",
-			type: "date",
-			required: true,
-			defaultValue: new Date()
-		}
 	]
 }

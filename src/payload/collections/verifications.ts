@@ -22,17 +22,5 @@ export const Verifications: CollectionConfig = {
 			required: true,
 			defaultValue: new Date()
 		},
-		{
-			name: "createdAt",
-			type: "date",
-			required: true,
-			defaultValue: new Date()
-		},
-		{
-			name: "updatedAt",
-			type: "date",
-			required: true,
-			defaultValue: new Date()
-		}
 	]
 }
