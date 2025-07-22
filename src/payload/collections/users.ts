@@ -1,5 +1,8 @@
 import { type CollectionConfig } from "payload";
-import { COLLECTION_SLUG_USERS } from "../constants";
+import { COLLECTION_SLUG_USERS } from "~/payload/constants";
+import selectEnumField from "~/payload/fields/selectEnumField";
+import { USER_ROLES } from "~/auth/config";
+import { auth } from "~/auth";
 
 export const Users: CollectionConfig = {
 	slug: COLLECTION_SLUG_USERS,
@@ -7,5 +10,83 @@ export const Users: CollectionConfig = {
 		hidden: ({ user }) => false,
 		useAsTitle: 'email',
 	},
-	fields: []
+	auth: {
+		disableLocalStrategy: true,
+		strategies: [
+			{
+				name: 'better-auth',
+				authenticate: async ({ headers, payload }) => {
+					try {
+						const userSession = await auth.api.getSession({ headers })
+
+						if (!userSession || !userSession.user) return { user: null }
+
+						const userData = await payload.findByID({
+							collection: COLLECTION_SLUG_USERS,
+							id: userSession?.user?.id,
+						})
+
+						return {
+							user: {
+								...userData,
+								collection: COLLECTION_SLUG_USERS,
+							},
+						}
+					} catch (err) {
+						payload.logger.error(err)
+						return { user: null }
+					}
+				},
+			},
+		],
+	},
+	endpoints: [
+		{
+			path: '/logout',
+			method: 'post',
+			handler: async (req) => {
+				await auth.api.signOut({
+					headers: req.headers,
+				})
+				return Response.json(
+					{
+						message: 'Token revoked successfully',
+					},
+					{
+						status: 200,
+						headers: req.headers,
+					},
+				)
+			},
+		},
+	],
+	fields: [
+		{
+			name: 'email',
+			type: 'email',
+			required: true,
+			unique: true,
+		},
+		{
+			name: 'emailVerified',
+			type: 'checkbox',
+			required: true,
+			defaultValue: false,
+		},
+		{
+			name: 'name',
+			type: 'text',
+			required: true,
+		},
+		{
+			name: 'image',
+			type: 'text',
+		},
+		selectEnumField({
+			name: "role",
+			object: USER_ROLES,
+			required: true,
+			defaultValue: USER_ROLES.user
+		}),
+	]
 }

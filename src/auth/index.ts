@@ -10,7 +10,7 @@ import {
 	COLLECTION_SLUG_VERIFICATIONS
 } from "~/payload/constants"
 import { customSession } from "better-auth/plugins"
-import { getPayloadAuth } from "~/payload/auth"
+import { getPayload } from "~/payload/utils"
 
 const client = new MongoClient(env.DATABASE_URI)
 const db = client.db()
@@ -23,41 +23,10 @@ export const auth = betterAuth({
 		enabled: true
 	},
 	user: {
-		modelName: COLLECTION_SLUG_USERS,
-		additionalFields: {
-			role: {
-				type: "string",
-				required: true,
-				defaultValue: USER_ROLES.user,
-				input: false
-			},
-			banned: {
-				type: "boolean",
-				required: true,
-				defaultValue: false,
-				input: false
-			},
-			banReason: {
-				type: "string",
-				required: false,
-				input: false
-			},
-			banExpires: {
-				type: "date",
-				required: false,
-				input: false
-			}
-		}
+		modelName: COLLECTION_SLUG_USERS
 	},
 	session: {
-		modelName: COLLECTION_SLUG_SESSIONS,
-		additionalFields: {
-			impersonatedBy: {
-				type: "string",
-				required: false,
-				input: false
-			}
-		}
+		modelName: COLLECTION_SLUG_SESSIONS
 	},
 	account: {
 		modelName: COLLECTION_SLUG_ACCOUNTS
@@ -75,11 +44,10 @@ export const auth = betterAuth({
 	plugins: [
 		...(betterAuthPlugins ?? []),
 		customSession(async ({ user, session }) => {
-			const payload = await getPayloadAuth()
+			const payload = await getPayload()
 			const existingUser = await payload.findByID({
-				collection:
-					COLLECTION_SLUG_USERS, id:
-					user.id
+				collection: COLLECTION_SLUG_USERS,
+				id: user.id
 			})
 			return {
 				user: {

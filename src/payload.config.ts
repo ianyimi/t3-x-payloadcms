@@ -3,8 +3,6 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
 import { env } from "~/env.mjs";
-import { pluginOptions } from "~/auth/config";
-import { payloadBetterAuth } from "@payload-auth/better-auth-plugin"
 import { collections } from "./payload/collections";
 import { COLLECTION_SLUG_USERS } from "./payload/constants";
 import path from "path";
@@ -49,7 +47,5 @@ export default buildConfig({
 		outputFile: path.resolve(dirname, 'payload-types.ts')
 	},
 
-	plugins: [
-		payloadBetterAuth(pluginOptions),
-	],
+	plugins: [],
 });

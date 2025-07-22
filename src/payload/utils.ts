@@ -1,4 +1,6 @@
-import { getPayload } from 'payload'
+import { getPayload as getPayloadBase } from 'payload'
 import config from '@payload-config'
 
-export const payload = await getPayload({ config })
+export function getPayload() {
+	return getPayloadBase({ config })
+}

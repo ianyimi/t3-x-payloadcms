@@ -31,17 +31,5 @@ export const Sessions: CollectionConfig = {
 			name: "userAgent",
 			type: "text",
 		},
-		{
-			name: "createdAt",
-			type: "date",
-			required: true,
-			defaultValue: new Date()
-		},
-		{
-			name: "updatedAt",
-			type: "date",
-			required: true,
-			defaultValue: new Date()
-		}
 	]
 }

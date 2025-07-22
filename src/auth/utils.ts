@@ -1,11 +1,10 @@
 import type { Account, DeviceSession, Session } from '~/auth/types'
 import { headers as requestHeaders } from 'next/headers'
-import { getPayloadAuth } from '~/payload/auth'
+import { auth } from '~/auth'
 
 export const getSession = async () => {
-	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
-	const session = await payload.betterAuth.api.getSession({ headers })
+	const session = await auth.api.getSession({ headers })
 	return session
 }
 
@@ -37,23 +36,20 @@ export const validateSession = async (session: Session) => {
 }
 
 export const getUserAccounts = async (): Promise<Account[]> => {
-	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
-	const accounts = await payload.betterAuth.api.listUserAccounts({ headers })
+	const accounts = await auth.api.listUserAccounts({ headers })
 	return accounts
 }
 
 export const getDeviceSessions = async (): Promise<DeviceSession[]> => {
-	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
-	const sessions = await payload.betterAuth.api.listSessions({ headers })
+	const sessions = await auth.api.listSessions({ headers })
 	return sessions
 }
 
 export const currentUser = async () => {
-	const payload = await getPayloadAuth()
 	const headers = await requestHeaders()
-	const session = await payload.betterAuth.api.getSession({ headers })
+	const session = await auth.api.getSession({ headers })
 	return session?.user || null
 }
 
