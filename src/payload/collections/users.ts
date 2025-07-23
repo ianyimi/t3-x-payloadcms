@@ -3,12 +3,14 @@ import { COLLECTION_SLUG_USERS } from "~/payload/constants";
 import selectEnumField from "~/payload/fields/selectEnumField";
 import { USER_ROLES } from "~/auth/config";
 import { auth } from "~/auth";
+import { serializeMongoDocIDs } from "~/payload/utils";
 
 export const Users: CollectionConfig = {
 	slug: COLLECTION_SLUG_USERS,
 	admin: {
 		hidden: ({ user }) => false,
-		useAsTitle: 'email',
+		useAsTitle: 'name',
+		defaultColumns: ['id', 'name', 'email', 'role', 'image'],
 	},
 	auth: {
 		disableLocalStrategy: true,
@@ -26,9 +28,11 @@ export const Users: CollectionConfig = {
 							id: userSession?.user?.id,
 						})
 
+						const serializedUserData = serializeMongoDocIDs(userData)
+
 						return {
 							user: {
-								...userData,
+								...serializedUserData,
 								collection: COLLECTION_SLUG_USERS,
 							},
 						}
