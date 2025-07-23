@@ -10,7 +10,7 @@ import {
 	COLLECTION_SLUG_VERIFICATIONS
 } from "~/payload/constants"
 import { customSession } from "better-auth/plugins"
-import { getPayload } from "~/payload/utils"
+import { getPayload, serializeMongoDocIDs } from "~/payload/utils"
 
 const client = new MongoClient(env.DATABASE_URI)
 const db = client.db()
@@ -49,12 +49,13 @@ export const auth = betterAuth({
 				collection: COLLECTION_SLUG_USERS,
 				id: user.id
 			})
+			const serializedUser = serializeMongoDocIDs(existingUser)
 			return {
 				user: {
-					...user,
-					role: existingUser.role
+					...serializeMongoDocIDs(user),
+					role: serializedUser.role
 				},
-				session
+				session: serializeMongoDocIDs(session)
 			}
 		})
 	]
