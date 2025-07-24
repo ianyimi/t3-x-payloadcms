@@ -1,5 +1,3 @@
-import { env } from "~/env.mjs";
-import { COLLECTION_SLUG_ACCOUNTS, COLLECTION_SLUG_SESSIONS, COLLECTION_SLUG_USERS, COLLECTION_SLUG_VERIFICATIONS } from "../payload/constants";
 import {
 	admin,
 	apiKey,

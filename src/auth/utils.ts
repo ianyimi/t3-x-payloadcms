@@ -1,6 +1,7 @@
 import type { Account, DeviceSession, Session } from '~/auth/types'
 import { headers as requestHeaders } from 'next/headers'
 import { auth } from '~/auth'
+import type { User } from 'better-auth'
 
 export const getSession = async () => {
 	const headers = await requestHeaders()
@@ -50,7 +51,7 @@ export const getDeviceSessions = async (): Promise<DeviceSession[]> => {
 export const currentUser = async () => {
 	const headers = await requestHeaders()
 	const session = await auth.api.getSession({ headers })
-	return session?.user || null
+	return session?.user as User ?? null
 }
 
 export const getContextProps = () => {
