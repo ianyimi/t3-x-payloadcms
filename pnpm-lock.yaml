@@ -98,6 +98,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3.3.1
         version: 3.3.1
+      '@next/eslint-plugin-next':
+        specifier: ^15.4.3
+        version: 15.4.3
       '@tailwindcss/postcss':
         specifier: ^4.0.15
         version: 4.1.11
@@ -119,6 +122,9 @@ importers:
       eslint-config-next:
         specifier: ^15.2.3
         version: 15.4.3(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.31.0(jiti@2.4.2))
       postcss:
         specifier: ^8.5.3
         version: 8.5.6

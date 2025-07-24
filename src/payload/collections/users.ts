@@ -1,4 +1,4 @@
-import { type CollectionConfig } from "payload";
+import { type AuthStrategyResult, type CollectionConfig } from "payload";
 import { COLLECTION_SLUG_USERS } from "~/payload/constants";
 import selectEnumField from "~/payload/fields/selectEnumField";
 import { USER_ROLES } from "~/auth/config";
@@ -8,7 +8,7 @@ import { serializeMongoDocIDs } from "~/payload/utils";
 export const Users: CollectionConfig = {
 	slug: COLLECTION_SLUG_USERS,
 	admin: {
-		hidden: ({ user }) => false,
+		hidden: () => false,
 		useAsTitle: 'name',
 		defaultColumns: ['id', 'name', 'email', 'role', 'image'],
 	},
@@ -21,21 +21,22 @@ export const Users: CollectionConfig = {
 					try {
 						const userSession = await auth.api.getSession({ headers })
 
-						if (!userSession || !userSession.user) return { user: null }
+						if (!userSession?.user) return { user: null }
 
 						const userData = await payload.findByID({
 							collection: COLLECTION_SLUG_USERS,
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 							id: userSession?.user?.id,
 						})
 
-						const serializedUserData = serializeMongoDocIDs(userData)
+						const serializedUserData = serializeMongoDocIDs(userData) as Record<string, unknown>
 
 						return {
 							user: {
 								...serializedUserData,
 								collection: COLLECTION_SLUG_USERS,
 							},
-						}
+						} as AuthStrategyResult
 					} catch (err) {
 						payload.logger.error(err)
 						return { user: null }

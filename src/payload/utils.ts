@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { getPayload as getPayloadBase } from 'payload'
 import config from '@payload-config'
 
@@ -6,7 +11,7 @@ export function getPayload() {
 }
 
 // Serialize MongoDB ObjectIds to strings
-export const serializeMongoDocIDs = (doc: Record<string, any>): any => {
+export const serializeMongoDocIDs = (doc: any): any => {
 	if (!doc) return doc
 	if (typeof doc === 'object' && doc.constructor?.name === 'ObjectId') {
 		return doc.toString()
@@ -26,6 +31,6 @@ export const serializeMongoDocIDs = (doc: Record<string, any>): any => {
 		}
 		return serialized
 	}
-	return doc
+	return doc as Record<string, unknown>
 }
 

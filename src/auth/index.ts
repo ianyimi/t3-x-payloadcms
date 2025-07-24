@@ -23,7 +23,15 @@ export const auth = betterAuth({
 		enabled: true
 	},
 	user: {
-		modelName: COLLECTION_SLUG_USERS
+		modelName: COLLECTION_SLUG_USERS,
+		additionalFields: {
+			role: {
+				type: "string",
+				required: true,
+				defaultValue: USER_ROLES.user,
+				input: false
+			}
+		}
 	},
 	session: {
 		modelName: COLLECTION_SLUG_SESSIONS
@@ -49,12 +57,14 @@ export const auth = betterAuth({
 				collection: COLLECTION_SLUG_USERS,
 				id: user.id
 			})
-			const serializedUser = serializeMongoDocIDs(existingUser)
+			const serializedUser = serializeMongoDocIDs(existingUser) as Record<string, unknown>
 			return {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				user: {
 					...serializeMongoDocIDs(user),
 					role: serializedUser.role
 				},
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				session: serializeMongoDocIDs(session)
 			}
 		})

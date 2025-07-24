@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation'
 export default function SignInClient({ session }: { session: Session | null }) {
 	const router = useRouter()
 
-	function handleAuth() {
+	async function handleAuth() {
 		if (session?.session && session.session.expiresAt.getTime() >= Date.now()) {
-			authClient.signOut()
+			await authClient.signOut()
 			return router.refresh()
 		}
 		return authClient.signIn.social({ provider: "google" })

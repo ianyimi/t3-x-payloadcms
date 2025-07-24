@@ -19,6 +19,7 @@ export default tseslint.config(
 		],
 		rules: {
 			"@typescript-eslint/array-type": "off",
+			"@typescript-eslint/ban-tslint-comment": "off",
 			"@typescript-eslint/unbound-method": "off",
 			"@typescript-eslint/consistent-type-definitions": "off",
 			"@typescript-eslint/consistent-type-imports": [

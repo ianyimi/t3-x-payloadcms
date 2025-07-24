@@ -19,4 +19,6 @@ export const authClient = createAuthClient({
 
 export const { signIn, signOut, useSession } = authClient
 
+// copied from code example, unsure if this is actually useful or not
+// eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-empty-function
 authClient.$store.listen('$sessionSignal', async () => { })
