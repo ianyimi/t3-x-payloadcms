@@ -173,7 +173,7 @@ Your app will be available at `http://localhost:3001`
 
 ### Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router + Turbopack)
 - **Language**: TypeScript 5.8
 - **Database**: MongoDB 6.17
 - **CMS**: Payload CMS 3.62
