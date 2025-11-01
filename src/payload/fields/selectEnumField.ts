@@ -1,4 +1,5 @@
 import type { Option, OptionObject } from "payload"
+
 import type { SelectField } from "~/payload/fields"
 import type { PickRequired } from "~/types"
 
@@ -13,8 +14,8 @@ export default function selectEnumField<T extends Record<string, string>>(
 	// @ts-expect-error mismatched hasMany type for some reason, unsure why. select field specific error here
 	return {
 		type: "select",
-		options: Object.entries(object).map(([key, value]) => ({ value: value, label: key } as OptionObject)) as Option[],
 		hasMany: false,
+		options: Object.entries(object).map(([key, value]) => ({ label: key, value } as OptionObject)) as Option[],
 		...restConfig
 	}
 }

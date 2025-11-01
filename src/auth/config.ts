@@ -1,8 +1,8 @@
+import { nextCookies } from "better-auth/next-js";
 import {
 	admin,
 	apiKey,
 } from "better-auth/plugins"
-import { nextCookies } from "better-auth/next-js";
 
 export const USER_ROLES = {
 	admin: 'admin',
@@ -12,8 +12,8 @@ export type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES]
 
 export const betterAuthPlugins = [
 	admin({
-		defaultRole: USER_ROLES.user,
-		adminRoles: [USER_ROLES.admin]
+		adminRoles: [USER_ROLES.admin],
+		defaultRole: USER_ROLES.user
 	}),
 	apiKey(),
 	nextCookies(),

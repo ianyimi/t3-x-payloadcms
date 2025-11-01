@@ -1,4 +1,5 @@
 import { type CollectionConfig } from "payload";
+
 import { COLLECTION_SLUG_PAGES } from "../constants";
 
 export const Pages: CollectionConfig = {
@@ -15,8 +16,8 @@ export const Pages: CollectionConfig = {
 		{
 			name: "title",
 			type: "text",
-			required: true,
-			defaultValue: "New Page"
+			defaultValue: "New Page",
+			required: true
 		},
 	]
 }

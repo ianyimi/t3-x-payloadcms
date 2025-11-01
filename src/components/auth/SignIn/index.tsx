@@ -1,5 +1,7 @@
 import { headers } from 'next/headers'
+
 import { auth } from '~/auth'
+
 import SignInClient from './client'
 
 export default async function SignInButton() {

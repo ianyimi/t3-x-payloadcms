@@ -1,16 +1,17 @@
 import { type AuthStrategyResult, type CollectionConfig } from "payload";
+
+import { auth } from "~/auth";
+import { USER_ROLES } from "~/auth/config";
 import { COLLECTION_SLUG_USERS } from "~/payload/constants";
 import selectEnumField from "~/payload/fields/selectEnumField";
-import { USER_ROLES } from "~/auth/config";
-import { auth } from "~/auth";
 import { serializeMongoDocIDs } from "~/payload/utils";
 
 export const Users: CollectionConfig = {
 	slug: COLLECTION_SLUG_USERS,
 	admin: {
 		hidden: () => false,
-		useAsTitle: 'name',
 		defaultColumns: ['id', 'name', 'email', 'role', 'image'],
+		useAsTitle: 'name',
 	},
 	auth: {
 		disableLocalStrategy: true,
@@ -21,12 +22,12 @@ export const Users: CollectionConfig = {
 					try {
 						const userSession = await auth.api.getSession({ headers })
 
-						if (!userSession?.user) return { user: null }
+						if (!userSession?.user) {return { user: null }}
 
 						const userData = await payload.findByID({
-							collection: COLLECTION_SLUG_USERS,
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 							id: userSession?.user?.id,
+							collection: COLLECTION_SLUG_USERS,
 						})
 
 						const serializedUserData = serializeMongoDocIDs(userData) as Record<string, unknown>
@@ -47,8 +48,6 @@ export const Users: CollectionConfig = {
 	},
 	endpoints: [
 		{
-			path: '/logout',
-			method: 'post',
 			handler: async (req) => {
 				await auth.api.signOut({
 					headers: req.headers,
@@ -58,11 +57,13 @@ export const Users: CollectionConfig = {
 						message: 'Token revoked successfully',
 					},
 					{
-						status: 200,
 						headers: req.headers,
+						status: 200,
 					},
 				)
 			},
+			method: 'post',
+			path: '/logout',
 		},
 	],
 	fields: [
@@ -75,8 +76,8 @@ export const Users: CollectionConfig = {
 		{
 			name: 'emailVerified',
 			type: 'checkbox',
-			required: true,
 			defaultValue: false,
+			required: true,
 		},
 		{
 			name: 'name',
@@ -89,9 +90,9 @@ export const Users: CollectionConfig = {
 		},
 		selectEnumField({
 			name: "role",
+			defaultValue: USER_ROLES.user,
 			object: USER_ROLES,
-			required: true,
-			defaultValue: USER_ROLES.user
+			required: true
 		}),
 	]
 }

@@ -1,7 +1,10 @@
-import type { Account, DeviceSession, Session } from '~/auth/types'
-import { headers as requestHeaders } from 'next/headers'
-import { auth } from '~/auth'
 import type { User } from 'better-auth'
+
+import { headers as requestHeaders } from 'next/headers'
+
+import type { Account, DeviceSession, Session } from '~/auth/types'
+
+import { auth } from '~/auth'
 
 export const getSession = async () => {
 	const headers = await requestHeaders()
@@ -59,5 +62,5 @@ export const getContextProps = () => {
 	const userAccountsPromise = getUserAccounts()
 	const deviceSessionsPromise = getDeviceSessions()
 	const currentUserPromise = currentUser()
-	return { sessionPromise, userAccountsPromise, deviceSessionsPromise, currentUserPromise }
+	return { currentUserPromise, deviceSessionsPromise, sessionPromise, userAccountsPromise }
 }

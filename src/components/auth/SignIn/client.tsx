@@ -1,12 +1,14 @@
 "use client"
 
-import { Button } from '~/ui/button'
-import { authClient } from '~/auth/client'
-import type { Session } from '~/auth/types'
 import { LogIn, LogOut } from "lucide-react"
 import { useRouter } from 'next/navigation'
 
-export default function SignInClient({ session }: { session: Session | null }) {
+import type { Session } from '~/auth/types'
+
+import { authClient } from '~/auth/client'
+import { Button } from '~/ui/button'
+
+export default function SignInClient({ session }: { session: null | Session }) {
 	const router = useRouter()
 
 	async function handleAuth() {
@@ -18,7 +20,7 @@ export default function SignInClient({ session }: { session: Session | null }) {
 	}
 
 	return (
-		<Button className="justify-between cursor-pointer gap-2" variant="default" onClick={handleAuth}>
+		<Button className="justify-between cursor-pointer gap-2" onClick={handleAuth} variant="default">
 			{!session?.session ? (
 				<LogOut size={20} />
 			) : (
