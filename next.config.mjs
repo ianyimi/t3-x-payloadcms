@@ -7,9 +7,10 @@ import { withPayload } from "@payloadcms/next/withPayload";
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  experimental: {
-    reactCompiler: true,
-  },
+	experimental: {
+		nodeMiddleware: true,
+		reactCompiler: true
+	},
 };
 
 export default withPayload(nextConfig);
