@@ -19,6 +19,9 @@ export default function ClientProviders({ children }: PropsWithChildren) {
 				router.refresh()
 			}}
 			replace={router.replace}
+			social={{
+				providers: ["google"]
+			}}
 		>
 			{children}
 		</AuthUIProvider>

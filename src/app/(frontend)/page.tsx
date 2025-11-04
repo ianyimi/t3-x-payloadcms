@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { LatestPost } from "~/app/_components/post";
 import SignIn from "~/components/auth/SignIn"
 import AdminPanelLink from "~/components/dev/AdminPanelLink";
+import { LatestPost } from "~/components/post";
 import { createTRPCServer, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {

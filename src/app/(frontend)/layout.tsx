@@ -18,14 +18,16 @@ const geist = Geist({
 });
 
 export default function RootLayout({
+	auth,
 	children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ auth: React.ReactNode; children: React.ReactNode }>) {
 	return (
 		<html className={`${geist.variable}`} lang="en">
 			<body>
 				<ServerProviders>
 					<ClientProviders>
 						{children}
+						{auth}
 					</ClientProviders>
 				</ServerProviders>
 			</body>

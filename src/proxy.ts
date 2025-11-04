@@ -4,12 +4,16 @@ import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "~/auth"
 
 export async function proxy(request: NextRequest) {
+	if (request.nextUrl.pathname === "/") {
+		return NextResponse.next()
+	}
+
 	const session = await auth.api.getSession({
 		headers: await headers()
 	})
 
 	if (!session) {
-		return NextResponse.redirect(new URL("/", request.url))
+		return NextResponse.redirect(new URL("/auth/sign-in", request.url))
 	}
 
 	return NextResponse.next()
